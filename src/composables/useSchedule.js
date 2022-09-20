@@ -1,5 +1,5 @@
 import {useFetch} from '@/composables/useFetch.js';
-import {isRef, ref, unref, watch, watchEffect} from 'vue';
+import {ref, unref, watch, watchEffect} from 'vue';
 
 export function useSchedule() {
     function fetchMap() {
@@ -11,7 +11,11 @@ export function useSchedule() {
             return dataValue
         }
 
-        const today = new Date().toJSON().slice(0, 10)
+        const today = new Date().toLocaleDateString('id', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').reverse().join('-')
 
         function getNumber(value) {
             return String(value).replace(/\D/g, '')
