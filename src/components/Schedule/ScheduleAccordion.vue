@@ -1,5 +1,6 @@
 <script setup>
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
+import {useWaitForElement} from '@/composables/useWaitForElement'
 import {onMounted, provide} from 'vue'
 
 const props = defineProps({
@@ -12,8 +13,8 @@ const props = defineProps({
   }
 })
 
-function scrollToElement() {
-  const [el] = document.querySelectorAll('[data-is-today="true"]');
+async function scrollToElement() {
+  const el = await useWaitForElement('[data-is-today="true"]')
   if (el) {
     window.scrollTo(0, el.offsetTop - 85)
   }
@@ -21,9 +22,7 @@ function scrollToElement() {
 
 provide('accordionId', props.id)
 onMounted(() => {
-  setTimeout(() => {
-    scrollToElement()
-  }, 1500)
+  scrollToElement()
 })
 </script>
 <template>
